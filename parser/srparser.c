@@ -3,24 +3,24 @@
 
 #define MAX 100
 
-// Productions
+// set of productions
 char prod[10][10];
 int n;
 
-// Function to check for possible reductions
+// check for possible reductions
 int reduce(char stack[], int *top) {
     int i;
 
-    // Check each production rule
+    // check each production rule
     for (i = 0; i < n; i++) {
         char lhs = prod[i][0];
-        char *rhs = prod[i] + 2;  // skip "X="
+        char *rhs = prod[i] + 2;
 
         int len_rhs = strlen(rhs);
         if (*top + 1 >= len_rhs) {
             int start = *top - len_rhs + 1;
             if (strncmp(stack + start, rhs, len_rhs) == 0) {
-                // Reduction
+                // reduction
                 *top = start;
                 stack[*top] = lhs;
                 stack[*top + 1] = '\0';
@@ -48,28 +48,28 @@ int main() {
     scanf("%s", input);
 
     int len = strlen(input);
-    input[len] = '$';  // End of input marker
+    input[len] = '$';  // end of input
     input[len + 1] = '\0';
 
-    stack[++top] = '$';  // Stack starts with end marker
+    stack[++top] = '$';  // since stack always starts with $
     stack[top + 1] = '\0';
 
     printf("\nStack\tInput\tAction\n");
     while (1) {
         printf("%s\t%s\t", stack, input + ip);
 
-        // Accept condition
+        // accept it
         if (stack[top] == 'S' && stack[top - 1] == '$' && input[ip] == '$') {
             printf("ACCEPT\n");
             break;
         }
 
-        // Try reduction
+        // reduce it
         if (reduce(stack, &top)) {
             continue;
         }
 
-        // Else shift
+        // or shift
         if (input[ip] != '\0') {
             stack[++top] = input[ip++];
             stack[top + 1] = '\0';
