@@ -48,10 +48,10 @@ int main() {
     scanf("%s", input);
 
     int len = strlen(input);
-    input[len] = '$';
+    input[len] = '$';  // End of input marker
     input[len + 1] = '\0';
 
-    stack[++top] = '$';
+    stack[++top] = '$';  // Stack starts with end marker
     stack[top + 1] = '\0';
 
     printf("\nStack\tInput\tAction\n");
