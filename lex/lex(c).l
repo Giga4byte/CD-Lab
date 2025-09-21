@@ -13,8 +13,7 @@ int main(int argc, char **argv) {
   printf("Enter a string:\n"); 
   yylex(); 
   printf("Total vowels: %d\n", vowels); 
-  printf("Total consonants: %d\n", 
-  consonants); 
+  printf("Total consonants: %d\n", consonants); 
   return 0;
 }
 
