@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include <string.h>
 
-#define MAX 10 // max = 10
+#define MAX 10 
 
 char production[MAX][10];  // Store productions
 char firstSet[10][10];     // Store FIRST sets
