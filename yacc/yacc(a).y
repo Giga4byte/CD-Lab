@@ -32,8 +32,7 @@ expr:
 int yylex(void) { 
     int c; 
     // skip whitespace except newline 
-    while ((c = getchar()) == ' ' || c == '\t') 
-        ; 
+    while ((c = getchar()) == ' ' || c == '\t'); 
     if (c == EOF) 
         return 0; 
  
