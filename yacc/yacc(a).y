@@ -69,3 +69,46 @@ int main(void) {
         printf("The expression is INVALID...\n"); 
     return 0; 
 }
+
+
+
+/*
+
+vae.l ------------------------------------------------
+%{
+ #include "y.tab.h"
+ #include <math.h>
+%}
+
+%%
+[0-9]+ {yylval = atoi(yytext); return NUM;}
+[+] {return '+';}
+[-] {return '-';}
+[*] {return '*';}
+[/] {return '/';}
+[\t]+;
+[\n] {return 0;}
+%%
+
+vae.y ------------------------------------------------
+%{
+ #include <stdio.h>
+ #include <math.h>
+%}
+
+%token NUM
+%left '-' '+' 
+%left '*' '/'
+
+%%
+start: exp {printf ("%d\n", $$);}
+exp: exp '+' exp {$$=$1+$3;}
+     | exp '-' exp {$$=$1-$3;}
+     | exp '*' exp {$$=$1*$3;}
+     | exp '/' exp {$$=$1/$3;}
+     | '('exp')' {$$=$2;}
+     | NUM {$$=$1;}
+     ;
+%%
+
+*/
