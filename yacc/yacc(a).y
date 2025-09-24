@@ -28,8 +28,7 @@ expr:
     ; 
 %% 
  
-/* Simple lexer implemented in the same file 
-*/ 
+/* Simple lexer implemented in the same file */ 
 int yylex(void) { 
     int c; 
     // skip whitespace except newline 
