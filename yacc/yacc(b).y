@@ -2,8 +2,7 @@
 #include <stdio.h> 
 #include <ctype.h> 
 int yylex(void); 
-void yyerror(const char *s) { printf("Invalid 
-input!\n"); } 
+void yyerror(const char *s) { printf("Invalid input!\n"); } 
 %} 
  
 %token ID NUM 
