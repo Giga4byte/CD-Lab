@@ -49,8 +49,7 @@ int yylex(void) {
     } 
     // Identifier token 
     if (isalpha(c)) { 
-        while (isalnum(c = getchar())) ; // Read rest 
-of word 
+        while (isalnum(c = getchar())) ; // Read rest of word 
         ungetc(c, stdin); 
         return ID; 
     } 
