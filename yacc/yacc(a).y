@@ -113,9 +113,12 @@ exp:   exp '+' exp {$$=$1+$3;}
 
 main() {
  printf("Enter the expression:\n");
- if(yyparse() == 0) { printf("SUCCESS\n"); }
- yywrap() {}
- yyerror() { printf("ERROR\n"); }
+ if(yyparse() == 0) 
+  { printf("SUCCESS\n"); } 
+}
+yywrap() {}
+yyerror() { 
+  printf("ERROR\n"); 
 }
 
 */
