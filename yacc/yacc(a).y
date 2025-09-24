@@ -102,7 +102,7 @@ vae.y ------------------------------------------------
 
 %%
 start: exp {printf ("%d\n", $$);}
-exp: exp '+' exp {$$=$1+$3;}
+exp:   exp '+' exp {$$=$1+$3;}
      | exp '-' exp {$$=$1-$3;}
      | exp '*' exp {$$=$1*$3;}
      | exp '/' exp {$$=$1/$3;}
@@ -110,5 +110,12 @@ exp: exp '+' exp {$$=$1+$3;}
      | NUM {$$=$1;}
      ;
 %%
+
+main() {
+ printf("Enter the expression:\n");
+ if(yyparse() == 0) { printf("SUCCESS\n"); }
+ yywrap() {}
+ yyerror() { printf("ERROR\n"); }
+}
 
 */
