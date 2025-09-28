@@ -36,8 +36,7 @@ void yyerror(const char *s) {
 } 
  
 int main() { 
-     printf("Enter arithmetic expressions (Ctrl+D 
-to exit):\n"); 
+     printf("Enter arithmetic expressions (Ctrl+D to exit):\n"); 
      yyparse(); 
      return 0; 
 }
