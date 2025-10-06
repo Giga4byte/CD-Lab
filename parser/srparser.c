@@ -15,8 +15,8 @@ int reduce(char stack[], int *top) {
     for (i = 0; i < n; i++) {
         char lhs = prod[i][0];
         char *rhs = prod[i] + 2;
-
         int len_rhs = strlen(rhs);
+        
         if (*top + 1 >= len_rhs) {
             int start = *top - len_rhs + 1;
             if (strncmp(stack + start, rhs, len_rhs) == 0) {
