@@ -55,3 +55,52 @@ int main(void) {
     yyparse(); 
     return 0; 
 } 
+
+/*
+identifier.l -----------------------------------------------------------------
+%{
+#include "y.tab.h"
+#include <stdio.h>
+#include <ctype.h>
+%}
+
+%%
+[ \t\n]+        ;   
+[0-9]+          { return NUM; }
+[a-zA-Z_][a-zA-Z0-9_]*   { return ID; }
+.               { return yytext[0]; }
+%%
+
+int yywrap() { return 1; }
+
+identifier.y -----------------------------------------------------------------
+%{
+#include <stdio.h>
+#include <stdlib.h>
+int yylex(void);
+void yyerror(const char *s) {
+    printf("Invalid input!\n");
+}
+%}
+
+%token ID NUM
+
+%%
+input:
+      /* empty */
+    | input token
+    ;
+
+token:
+      ID  { printf("Valid identifier!\n"); }
+    | NUM { printf("Invalid identifier!\n"); }
+    ;
+%%
+
+int main(void) {
+    printf("Enter something:\n");
+    yyparse();
+    return 0;
+}
+
+*/
