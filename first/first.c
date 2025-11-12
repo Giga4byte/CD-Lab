@@ -95,3 +95,99 @@ void addToResult(char *res, char val) {
     res[len] = val;
     res[len + 1] = '\0';
 }
+
+
+/*
+FOLLOW OF A GRAMMAR:
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX 10
+
+char production[MAX][10];
+int n;
+
+void addToResult(char *res, char val) {
+    for (int i = 0; res[i] != '\0'; i++) {
+        if (res[i] == val) return; // avoid duplicates
+    }
+    int len = strlen(res);
+    res[len] = val;
+    res[len + 1] = '\0';
+}
+
+void findFirst(char *res, char c);
+
+// FOLLOW function
+void findFollow(char *res, char c) {
+    // Rule 1: If start symbol, add $
+    if (production[0][0] == c) {
+        addToResult(res, '$');
+    }
+    // Rule 2: Find c in RHS of all productions
+    for (int i = 0; i < n; i++) {
+        char *rhs = strchr(production[i], c);
+        if (rhs != NULL) {
+            // Check what comes after c in RHS
+            if (*(rhs + 1) != '\0') {
+                char next = *(rhs + 1);
+                char temp[20] = "";
+                findFirst(temp, next);
+
+                // Add FIRST(next) - {ε} to FOLLOW(c)
+                for (int k = 0; temp[k] != '\0'; k++) {
+                    if (temp[k] != 'e')
+                        addToResult(res, temp[k]);
+                }
+
+                // If FIRST(next) contains ε, add FOLLOW(LHS)
+                if (strchr(temp, 'e')) {
+                    if (production[i][0] != c)
+                        findFollow(res, production[i][0]);
+                }
+            } else {
+                // If c is at end → add FOLLOW(LHS)
+                if (production[i][0] != c)
+                    findFollow(res, production[i][0]);
+            }
+        }
+    }
+}
+
+// FIRST function
+void findFirst(char *res, char c) {
+    for (int i = 0; i < n; i++) {
+        if (production[i][0] == c) {
+            char rhs = production[i][2];
+            if (rhs == 'e') addToResult(res, 'e');
+            else if (!isupper(rhs)) addToResult(res, rhs);
+            else findFirst(res, rhs);
+        }
+    }
+    if (!isupper(c)) addToResult(res, c);
+}
+
+int main() {
+    printf("Enter number of productions: ");
+    scanf("%d", &n);
+
+    printf("Enter productions (use = instead of ->, and 'e' for epsilon):\n");
+    for (int i = 0; i < n; i++)
+        scanf("%s", production[i]);
+
+    char symbol;
+    printf("Enter non-terminal to find FOLLOW: ");
+    scanf(" %c", &symbol);
+
+    char followSet[20] = "";
+    findFollow(followSet, symbol);
+
+    printf("\nFOLLOW(%c) = { ", symbol);
+    for (int i = 0; followSet[i] != '\0'; i++)
+        printf("%c ", followSet[i]);
+    printf("}\n");
+
+    return 0;
+}
+*/
