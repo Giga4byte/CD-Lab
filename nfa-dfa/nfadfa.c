@@ -118,20 +118,20 @@ int main() {
 #include <stdio.h>
 #include <string.h>
 
-#define MAX_STATES 8
+#define MAX_NFA_STATES 8
 #define MAX_INPUTS 8
-#define MAX_DFA (1 << MAX_STATES)  // Power set
+#define MAX_DFA_STATES (1 << MAX_NFA_STATES)
 
 int nfa[MAX_INPUTS][MAX_STATES][MAX_STATES];
 int numStates, numInputs, startState;
 
 // DFA storage
-int dfaStates[MAX_DFA];               // Each DFA state = subset of NFA states (bitmask)
-int dfaTrans[MAX_DFA][MAX_INPUTS];    // DFA transitions
+int dfaStates[MAX_DFA_STATES];
+int dfaTrans[MAX_DFA_STATES][MAX_INPUTS]; 
 int dfaCount = 0;
 
 // Find or add a DFA state, return its index
-int findOrAddState(int subset) {
+int findOrAddState (int subset) {
     for (int i = 0; i < dfaCount; i++) {
         if (dfaStates[i] == subset)
             return i;
@@ -140,8 +140,8 @@ int findOrAddState(int subset) {
     return dfaCount++;
 }
 
-// Print subset like {q0,q2}
-void printSubset(int subset) {
+// Print subset
+void printSubset (int subset) {
     printf("{");
     int first = 1;
     for (int i = 0; i < numStates; i++) {
@@ -165,15 +165,15 @@ int main() {
     scanf("%d", &startState);
 
     // Input NFA transition table
-    for (int in = 0; in < numInputs; in++) {
-        printf("\nEnter NFA transitions for input %d (as %d x %d matrix):\n", in, numStates, numStates);
-        for (int from = 0; from < numStates; from++)
-            for (int to = 0; to < numStates; to++)
-                scanf("%d", &nfa[in][from][to]);
+    for (int i = 0; i < numInputs; i++) {
+        printf("\nEnter NFA for variable %d\n", i);
+        for (int j = 0; j < numStates; j++)
+            for (int k = 0; k < numStates; k++)
+                scanf("%d", &nfa[i][j][k]);
     }
 
     // DFA construction
-    int queue[MAX_DFA], front = 0, rear = 0;
+    int queue[MAX_DFA_STATES], front = 0, rear = 0;
     int startMask = (1 << startState);
     int startIndex = findOrAddState(startMask);
     queue[rear++] = startIndex;
@@ -184,15 +184,13 @@ int main() {
         int currentIndex = queue[front++];
         int currentSubset = dfaStates[currentIndex];
 
-        for (int in = 0; in < numInputs; in++) {
+        for (int i = 0; i < numInputs; i++) {
             int nextSubset = 0;
-
-            // For every NFA state in current subset
-            for (int s = 0; s < numStates; s++) {
-                if (currentSubset & (1 << s)) {
-                    for (int t = 0; t < numStates; t++) {
-                        if (nfa[in][s][t])
-                            nextSubset |= (1 << t);
+            for (int j = 0; j < numStates; j++) {
+                if (currentSubset & (1 << j)) {
+                    for (int k = 0; k < numStates; k++) {
+                        if (nfa[i][j][k])
+                            nextSubset |= (1 << k);
                     }
                 }
             }
