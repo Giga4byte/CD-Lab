@@ -198,9 +198,8 @@ int main() {
             if (nextSubset == 0) continue;
 
             int nextIndex = findOrAddState(nextSubset);
-            dfaTrans[currentIndex][in] = nextIndex;
+            dfaTrans[currentIndex][i] = nextIndex;
 
-            // Add new DFA state to queue
             int isNew = 1;
             for (int k = 0; k < rear; k++)
                 if (queue[k] == nextIndex) isNew = 0;
