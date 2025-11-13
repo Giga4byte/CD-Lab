@@ -1,3 +1,5 @@
+// doesn't work for grammar with left recursion i.e A->Aa
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
